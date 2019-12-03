@@ -6,4 +6,5 @@ Steps to run the application
 3. Go to root of project directory and run `docker-compose build` to setup the web application image.
 4. Run `docker images ghibli_studio_web` to check created image.
 5. From root of project, run `docker-compose up`, this will start web app and memecache server.
-6. Go to http://localhost:8000/movies/ on your web broswer to get list of movies. 
+6. Go to http://localhost:8000/movies/ on your web broswer to get the list of movies.
+7. To stop the application, from root directory of project run `docker-compose down`
