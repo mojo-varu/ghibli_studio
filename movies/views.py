@@ -1,27 +1,37 @@
 from django.conf import settings
+
+from django.http import HttpResponseNotFound
 from django.shortcuts import render
-from rest_framework.views import APIView
+from django.core.cache import cache
+
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from django.core.cache import cache
 from movies.dataservice import get_people_per_movie, get_films_people_mapping
 
 
 class MoviesPeopleMapping(APIView):
     def get(self, request, *args, **kwargs):
         films_people = get_films_people_mapping()
-        return Response(films_people,
-                        status=status.HTTP_200_OK)
+        if films_people:
+            return Response(films_people, status=status.HTTP_200_OK)
+        else:
+            return Response('People are unpredictable, they go missing !',
+                            status=status.HTTP_404_NOT_FOUND)
 
 
 class MoviesView(APIView):
-    def get(self, request, ):
-
+    def get(self, request, *args, **kwargs):
         result = cache.get(settings.CACHE_KEY)
         if not result:
             result = get_people_per_movie()
             cache.set(settings.CACHE_KEY, result,
                       settings.CACHE_TIMEOUT_IN_SECS)
-
-        return render(request, 'movies/movies-list.html', {'movies': result})
+        if result:
+            return render(request, 'movies/movies-list.html',
+                          {'movies': result})
+        else:
+            return HttpResponseNotFound('<h2>Something wrong with movies !<br>'
+                                        'Meanwhile read books until '
+                                        'we fix this.</h2>')
