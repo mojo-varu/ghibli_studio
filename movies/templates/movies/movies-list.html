@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Studio Ghibli Movies</title>
+    {% for movie in movies %}
+    <div>
+        <h2>{{ movie.movie_name }}</h2>
+        <p><b>Last updated on :</b> {{ movie.updated_at }}</p>
+        {% if movie.people_in_movie %}
+        <p><b>Casting :</b>
+            {% for person in movie.people_in_movie %}
+                {{ person }},&nbsp;
+            {% endfor %}
+        </p>
+        {% endif %}
+        <td>
+    </div>
+    {% endfor %}
+</head>
+<body>
+
+</body>
+</html>

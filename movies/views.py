@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
@@ -23,5 +24,4 @@ class MoviesView(APIView):
             cache.set(settings.CACHE_KEY, result,
                       settings.CACHE_TIMEOUT_IN_SECS)
 
-        return Response(result,
-                        status=status.HTTP_200_OK)
+        return render(request, 'movies/movies-list.html', {'movies': result})

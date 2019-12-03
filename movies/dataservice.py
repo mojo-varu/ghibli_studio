@@ -37,5 +37,7 @@ def get_people_per_movie():
                                  'movie_id': film['id'],
                                  'people_in_movie':
                                      movie_people_mapping.get(film['id']),
-                                 'updated_at': str(datetime.datetime.now())})
+                                 'updated_at':
+                                     datetime.datetime.now().strftime(
+                                         "%m/%d/%Y, %H:%M:%S")})
     return people_per_movie
