@@ -9,8 +9,10 @@ services:
       - .:/ghilib_studio
     ports:
       - "8000:8000"
+    depends_on:
+      - memcached
 
-  Memcached:
+  memcached:
     image: memcached:1.5-alpine
     container_name: ghilib_studio_cache
     ports:

@@ -10,4 +10,6 @@ WORKDIR /ghilib_studio
 COPY . /ghilib_studio/
 RUN pwd
 
+RUN export DJANGO_SETTINGS_MODULE=ghibli_studio.settings
+
 RUN pip install -r requirements.txt
