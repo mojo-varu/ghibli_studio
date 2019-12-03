@@ -1,5 +1,6 @@
 import json
 import requests
+import datetime
 
 
 def get_all_films():
@@ -33,6 +34,7 @@ def get_people_per_movie():
     for film in films:
         people_per_movie.append({'movie_name': film['title'],
                                  'movie_id': film['id'],
-                                'people_in_movie':
-                                    movie_people_mapping.get(film['id'])})
+                                 'people_in_movie':
+                                     movie_people_mapping.get(film['id']),
+                                 'updated_at': str(datetime.datetime.now())})
     return people_per_movie
