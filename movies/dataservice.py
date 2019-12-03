@@ -1,10 +1,11 @@
+from django.conf import settings
 import json
 import requests
 import datetime
 
 
 def get_all_films():
-    response = requests.get('https://ghibliapi.herokuapp.com/films/',
+    response = requests.get(settings.STUDIO_GHIBLI_BASE_URL+'/films/',
                             params={'limit': '250'})
     print("Films Response Status : ", response.status_code)
     films = json.loads(response.text)
@@ -12,7 +13,7 @@ def get_all_films():
 
 
 def get_films_people_mapping():
-    response = requests.get('https://ghibliapi.herokuapp.com/people/',
+    response = requests.get(settings.STUDIO_GHIBLI_BASE_URL+'/people/',
                             params={'limit': '250'})
     people = json.loads(response.text)
     movie_people_mapping = {}

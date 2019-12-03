@@ -53,6 +53,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'ghibli_studio.urls'
 
+STUDIO_GHIBLI_BASE_URL = 'https://ghibliapi.herokuapp.com'
+CACHE_KEY = 'ghibli_studio_cache'
+CACHE_TIMEOUT_IN_SECS = 60
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -113,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'CET'
 
 USE_I18N = True
 

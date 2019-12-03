@@ -1,3 +1,4 @@
+from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
@@ -16,13 +17,11 @@ class MoviesPeopleMapping(APIView):
 class MoviesView(APIView):
     def get(self, request, ):
 
-        cache_key = 'ghibli_studio_cache'
-        cache_time = 60
-        result = cache.get(cache_key)
-
+        result = cache.get(settings.CACHE_KEY)
         if not result:
             result = get_people_per_movie()
-            cache.set(cache_key, result, cache_time)
+            cache.set(settings.CACHE_KEY, result,
+                      settings.CACHE_TIMEOUT_IN_SECS)
 
         return Response(result,
                         status=status.HTTP_200_OK)
