@@ -22,6 +22,9 @@ class GhibliStudio:
     def _get_movies(self):
         """
         To retrieve information about all of the Studio Ghibli films.
+
+        :return: list of dictionaries containing information about all movies
+        :rtype: <class 'dict'>
         """
         response = requests.get(self._api_base_url + self._films_endpoint,
                                 params=self._limit_params)
@@ -34,6 +37,9 @@ class GhibliStudio:
     def _get_people(self):
         """
         To retrieve information about all of the Studio Ghibli people.
+
+        :return: list of dictionaries containing information about all people
+        :rtype: <class 'dict'>
         """
         response = requests.get(self._api_base_url + self._people_endpoint,
                                 params=self._limit_params)
@@ -47,6 +53,10 @@ class GhibliStudio:
         """
         To create a mapping, based on one to many relationship between people
         and films as provided by the people/ endpoint of Studio Ghibli.
+
+        :return: dictionary with movie id as key and list of people names as
+                value
+        :rtype: <class 'dict'>
         """
         people = self._get_people()
         if not people:
@@ -71,8 +81,12 @@ class GhibliStudio:
 
     def get_people_per_movie(self):
         """
-        Returns a list containing  movies mapped to people performed in each
-        movie.
+        Returns all the movies mapped with names of people performed in
+        each movie.
+
+        :return: list of dictionaries containing movies names and list of
+                names of people performed
+        :rtype: <class 'list'>
         """
         movies = self._get_movies()
         if not movies:

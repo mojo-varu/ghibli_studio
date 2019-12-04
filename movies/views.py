@@ -36,7 +36,8 @@ class MoviesView(APIView):
     Also running a periodic task is not a viable option here.
 
     With our current implementation we need to hit Ghibli's API only once on
-    each cache miss.
+    each cache miss. Also it can be fairly scaled with little changes in case
+    Ghibli's API response time or payload increases to a considerable number.
     """
 
     def get(self, request, *args, **kwargs):
