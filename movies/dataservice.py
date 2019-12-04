@@ -5,6 +5,13 @@ from movies import constants
 
 
 class GhibliStudio:
+    """ To consume information from Studio Ghibli API endpoints
+
+    This class contains methods to retrieve information from films/ and people/
+    endpoints provided by Studio Ghibli. Also it contains methods to create
+    mapping on retrieved data as per one to many relationship between people
+    and films, provided by people/ endpoint.
+    """
 
     def __init__(self):
         self._api_base_url = settings.STUDIO_GHIBLI_BASE_URL
@@ -13,6 +20,9 @@ class GhibliStudio:
         self._limit_params = {'limit': '250'}
 
     def _get_movies(self):
+        """
+        To retrieve information about all of the Studio Ghibli films.
+        """
         response = requests.get(self._api_base_url + self._films_endpoint,
                                 params=self._limit_params)
         if response.status_code != requests.codes.ok:
@@ -22,6 +32,9 @@ class GhibliStudio:
         return movies
 
     def _get_people(self):
+        """
+        To retrieve information about all of the Studio Ghibli people.
+        """
         response = requests.get(self._api_base_url + self._people_endpoint,
                                 params=self._limit_params)
         if response.status_code != requests.codes.ok:
@@ -31,6 +44,10 @@ class GhibliStudio:
         return people
 
     def get_movies_people_mapping(self):
+        """
+        To create a mapping, based on one to many relationship between people
+        and films as provided by the people/ endpoint of Studio Ghibli.
+        """
         people = self._get_people()
         if not people:
             return
@@ -53,6 +70,10 @@ class GhibliStudio:
         return movies_people_mapping
 
     def get_people_per_movie(self):
+        """
+        Returns a list containing  movies mapped to people performed in each
+        movie.
+        """
         movies = self._get_movies()
         if not movies:
             return
