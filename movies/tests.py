@@ -4,6 +4,12 @@ from movies.views import MoviesView, MoviesPeopleMapping
 
 from memcache import Client as MemClient
 
+""" 
+Suggestion - 
+Right now the unit tests are hitting Ghibili API.
+This can be mocking request/response of Ghibili API
+"""
+
 
 class TestUrls(TestCase):
     """ Tests that URLs in movies app resolves to correct views """
@@ -24,7 +30,6 @@ class TestViews(TestCase):
         self.client = DjangoClient()
         self.movies_view_url = reverse('movies-list')
         self.people_mapping_url = reverse('movies-people-mapping')
-
         self.movies_view_template = 'movies/movies-list.html'
 
     def test_movies_view_GET(self):
@@ -32,7 +37,6 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, self.movies_view_template)
         self.assertTrue(isinstance(response.context['movies'], list))
-        self.assertNotEqual(len(response.context['movies']), 0)
 
     def test_people_mapping_view_GET(self):
         response = self.client.get(self.people_mapping_url)
@@ -56,8 +60,3 @@ class TestMemcached(TestCase):
         self.mc.set(key, val_gave, noreply=True)
         val_got = self.mc.get(key)
         self.assertEqual(val_got, val_got)
-
-class TestGhibliStudioAPI(TestCase):
-    """
-     TODO - Requires Mocking API responses from Ghibli Studio endopints
-    """
