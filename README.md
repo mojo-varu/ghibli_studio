@@ -2,7 +2,7 @@
 
 Steps to run the application
 1. Install docker and docker-compose on your system, go to https://docs.docker.com/install/
-2. Go to root of project directory and run `git checkout develop` to checkout to develop branch.
+2. Clone the project and checkout to develop branch.
 3. Then from root of project directory run `docker-compose build` to setup the web application image.
 4. Run `docker images ghibli_studio_web` to check newly created image.
 5. Then from root of project directory run `docker-compose up`, this will start web app and memecache server.
