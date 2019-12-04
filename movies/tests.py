@@ -1,6 +1,8 @@
-from django.test import TestCase, Client
+from django.test import TestCase, Client as DjangoClient
 from django.urls import reverse, resolve
 from movies.views import MoviesView, MoviesPeopleMapping
+
+from memcache import Client as MemClient
 
 
 class TestUrls(TestCase):
@@ -19,7 +21,7 @@ class TestViews(TestCase):
     """ Tests that the response of the views are valid  """
 
     def setUp(self):
-        self.client = Client()
+        self.client = DjangoClient()
         self.movies_view_url = reverse('movies-list')
         self.people_mapping_url = reverse('movies-people-mapping')
 
@@ -37,3 +39,25 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
+class TestMemcached(TestCase):
+    """ Tests interaction with memcached server """
+
+    def setUp(self):
+        servers = ["memcached:11211"]
+        self.mc = MemClient(servers, debug=1)
+
+    def tearDown(self):
+        self.mc.flush_all()
+        self.mc.disconnect_all()
+
+    def test_setget(self):
+        key = "ghibli"
+        val_gave = "studio"
+        self.mc.set(key, val_gave, noreply=True)
+        val_got = self.mc.get(key)
+        self.assertEqual(val_got, val_got)
+
+class TestGhibliStudioAPI(TestCase):
+    """
+     TODO - Requires Mocking API responses from Ghibli Studio endopints
+    """
