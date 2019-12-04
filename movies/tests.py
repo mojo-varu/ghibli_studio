@@ -4,10 +4,10 @@ from movies.views import MoviesView, MoviesPeopleMapping
 
 from memcache import Client as MemClient
 
-""" 
-Suggestion - 
-Right now the unit tests are hitting Ghibili API.
-This can be mocking request/response of Ghibili API
+"""
+Suggestion -
+Right now the unit tests are consuming Ghibili API for testing.
+This can be avoided by mocking request/response of Ghibili API.
 """
 
 
