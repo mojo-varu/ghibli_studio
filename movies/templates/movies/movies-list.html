@@ -6,15 +6,14 @@
     {% for movie in movies %}
     <div>
         <h2>{{ movie.movie_name }}</h2>
-        <p><b>Last updated on :</b> {{ movie.updated_at }}</p>
-        {% if movie.people_in_movie %}
+        {% if movie.people_performed %}
         <p><b>Casting :</b>
-            {% for person in movie.people_in_movie %}
+            {% for person in movie.people_performed %}
                 {{ person }},&nbsp;
             {% endfor %}
         </p>
         {% endif %}
-        <td>
+        <hr>
     </div>
     {% endfor %}
 </head>
