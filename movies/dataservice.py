@@ -1,4 +1,6 @@
 from django.conf import settings
+from rest_framework import status
+
 import json
 import requests
 from movies import constants
@@ -28,7 +30,8 @@ class GhibliStudio:
         """
         response = requests.get(self._api_base_url + self._films_endpoint,
                                 params=self._limit_params)
-        if response.status_code != requests.codes.ok:
+
+        if response.status_code != status.HTTP_200_OK:
             return
 
         movies = json.loads(response.text)
@@ -43,7 +46,8 @@ class GhibliStudio:
         """
         response = requests.get(self._api_base_url + self._people_endpoint,
                                 params=self._limit_params)
-        if response.status_code != requests.codes.ok:
+
+        if response.status_code != status.HTTP_200_OK:
             return
 
         people = json.loads(response.text)
