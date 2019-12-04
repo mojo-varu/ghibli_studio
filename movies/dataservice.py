@@ -1,16 +1,19 @@
 from django.conf import settings
 import json
 import requests
+from movies import constants
 
 
 class GhibliStudio:
 
     def __init__(self):
         self._api_base_url = settings.STUDIO_GHIBLI_BASE_URL
+        self._films_endpoint = settings.SG_FILMS_ENDPOINT
+        self._people_endpoint = settings.SG_PEOPLE_ENDPOINT
         self._limit_params = {'limit': '250'}
 
     def _get_movies(self):
-        response = requests.get(self._api_base_url+'/films/',
+        response = requests.get(self._api_base_url + self._films_endpoint,
                                 params=self._limit_params)
         if response.status_code != requests.codes.ok:
             return
@@ -19,7 +22,7 @@ class GhibliStudio:
         return movies
 
     def _get_people(self):
-        response = requests.get(self._api_base_url + '/people/',
+        response = requests.get(self._api_base_url + self._people_endpoint,
                                 params=self._limit_params)
         if response.status_code != requests.codes.ok:
             return
@@ -34,8 +37,8 @@ class GhibliStudio:
 
         movies_people_mapping = {}
         for person in people:
-            person_name = person.get('name')
-            movies_performed = person.get('films')
+            person_name = person.get(constants.people_name)
+            movies_performed = person.get(constants.people_films)
 
             if not movies_performed:
                 continue
@@ -60,10 +63,9 @@ class GhibliStudio:
 
         people_per_movie = []
         for movie in movies:
-            people_per_movie.append({'movie_name': movie.get('title'),
-                                     'people_performed':
-                                         movies_with_people.get(
-                                             movie.get('id'))})
+            people_per_movie.append({constants.movie_name: movie.get(
+                constants.film_title), constants.people_performed:
+                movies_with_people.get(movie.get(constants.film_id))})
 
         return people_per_movie
 

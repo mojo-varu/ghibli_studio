@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from movies.dataservice import GhibliStudio
+from movies import constants
 
 
 class MoviesPeopleMapping(APIView):
@@ -16,7 +17,7 @@ class MoviesPeopleMapping(APIView):
         ghibli_studio = GhibliStudio()
         movies_people = ghibli_studio.get_movies_people_mapping()
         if not movies_people:
-            return Response('People are unpredictable, they go missing !',
+            return Response(constants.people_missing,
                             status=status.HTTP_404_NOT_FOUND)
 
         return Response(movies_people, status=status.HTTP_200_OK)
@@ -31,9 +32,7 @@ class MoviesView(APIView):
             cache.set(settings.CACHE_KEY, result,
                       settings.CACHE_TIMEOUT_IN_SECS)
         if not result:
-            return HttpResponseNotFound('<h2>Something wrong with movies !<br>'
-                                        'Meanwhile read books until '
-                                        'we fix this.</h2>')
+            return HttpResponseNotFound(constants.movies_missing)
 
-        return render(request, 'movies/movies-list.html',
-                      {'movies': result})
+        return render(request, constants.movies_template,
+                      {constants.movies: result})

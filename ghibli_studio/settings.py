@@ -54,6 +54,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'ghibli_studio.urls'
 
 STUDIO_GHIBLI_BASE_URL = 'https://ghibliapi.herokuapp.com'
+SG_FILMS_ENDPOINT = '/films/'
+SG_PEOPLE_ENDPOINT = '/people/'
+
 CACHE_KEY = 'ghibli_studio_cache'
 CACHE_TIMEOUT_IN_SECS = 60
 
