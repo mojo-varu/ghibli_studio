@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: bash -c 'python manage.py makemigrations && python manage.py migrate && python manage.py test && python manage.py runserver 0.0.0.0:8000'
+    container_name: ghilib_studio
+    volumes:
+      - .:/ghilib_studio
+    ports:
+      - "8000:8000"
+    depends_on:
+      - memcached
+
+  memcached:
+    image: memcached:1.5-alpine
+    container_name: ghilib_studio_cache
+    ports:
+      - "11211:11211"
+    restart: always
